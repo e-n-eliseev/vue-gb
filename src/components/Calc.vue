@@ -58,7 +58,7 @@ export default {
       number1: 0,
       number2: 0,
       isVisible: false,
-      number: "",
+      number: "number1",
     };
   },
   methods: {
