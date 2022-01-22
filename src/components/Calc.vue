@@ -17,6 +17,35 @@
         n<sup>m</sup>
       </button>
     </div>
+    <label
+      ><input type="checkbox" id="checkbox" v-model="isVisible" /> Показать
+      экранную клавиатуру.</label
+    >
+    <div v-if="isVisible">
+      <button v-for="item in 9" :key="item" @click="buttonNumber(item)">
+        {{ item }}
+      </button>
+      <button @click="buttonBackSpace()">Del</button>
+      <button @click="buttonReset()">Reset</button>
+      <div>
+        <label
+          ><input
+            type="radio"
+            name="number"
+            v-model="number"
+            value="number1"
+          />Первое число</label
+        >
+        <label
+          ><input
+            type="radio"
+            name="number"
+            v-model="number"
+            value="number2"
+          />Второе число</label
+        >
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,9 +57,21 @@ export default {
       result: "Введите числа и выберите операцию",
       number1: 0,
       number2: 0,
+      isVisible: false,
+      number: "",
     };
   },
   methods: {
+    buttonReset() {
+      this.number1 = 0;
+      this.number2 = 0;
+    },
+    buttonBackSpace() {
+      this[this.number] = (this[this.number] / 10) | 0;
+    },
+    buttonNumber(item) {
+      this[this.number] = this[this.number] * 10 + item;
+    },
     summ(number1 = 0, number2 = 0) {
       this.result = `Результат сложения чисел ${this.number1} и ${
         this.number2
