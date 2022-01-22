@@ -1,18 +1,8 @@
 <template>
   <div class="calc">
     <div class="calc-inputs">
-      <input
-        class="calc-number1"
-        type="number"
-        v-model.number="number1"
-        placeholder="0"
-      />
-      <input
-        class="calc-number2"
-        type="number"
-        v-model.number="number2"
-        placeholder="0"
-      />
+      <input class="calc-number1" type="number" v-model="number1" />
+      <input class="calc-number2" type="number" v-model="number2" />
       <p class="calc-result">{{ result }}</p>
     </div>
     <div class="calc-methods">
@@ -36,79 +26,57 @@ export default {
   data() {
     return {
       result: "Введите числа и выберите операцию",
-      number1: null,
-      number2: null,
+      number1: 0,
+      number2: 0,
     };
   },
   methods: {
-    numberToNull() {
-      this.number1 = null;
-      this.number2 = null;
-    },
-    numberFromNull() {
-      if (this.number1 === null) this.number1 = 0;
-      if (this.number2 === null) this.number2 = 0;
-    },
     summ(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       this.result = `Результат сложения чисел ${this.number1} и ${
         this.number2
       } : ${number1 + number2}`;
-      this.numberToNull();
       return this.result;
     },
     diff(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       this.result = `Результат разности чисел ${this.number1} и ${
         this.number2
       } :
       ${number1 - number2}`;
-      this.numberToNull();
       return this.result;
     },
     mult(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       this.result = `Результат умножения чисел ${this.number1} и ${
         this.number2
       } :
       ${number1 * number2}`;
-      this.numberToNull();
       return this.result;
     },
     divide(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       if (!this.number2) {
-        this.numberToNull();
         return (this.result = "Делить на 0 нельзя");
       }
       this.result = `Результат деления чисела ${this.number1} на ${
         this.number2
       } :
        ${number1 / number2}`;
-      this.numberToNull();
       return this.result;
     },
     divideInt(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       if (!this.number2) {
-        this.numberToNull();
         return (this.result = "Делить на 0 нельзя");
       }
       this.result = `Результат целочисленного деления числа 
       ${this.number1} на ${this.number2} : ${Number.parseInt(
         number1 / number2
       )}`;
-      this.numberToNull();
       return this.result;
     },
     pow(number1 = 0, number2 = 0) {
-      this.numberFromNull();
       this.result = `Результат возведения чисела 
       ${this.number1} в степень ${this.number2} : ${Math.pow(
         number1,
         number2
       )}`;
-      this.numberToNull();
       return this.result;
     },
   },
