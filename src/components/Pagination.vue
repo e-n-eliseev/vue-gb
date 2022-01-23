@@ -14,6 +14,35 @@
     <button class="paggination-btn" @click="showNext">
       <span class="paggination-icon" :title="nextTolltip">☛</span>
     </button>
+    <div>
+      <label
+        ><input
+          type="radio"
+          name="number"
+          v-model="number"
+          value="5"
+          @change="changeLength"
+        />5</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="number"
+          v-model="number"
+          value="10"
+          @change="changeLength"
+        />10</label
+      >
+      <label
+        ><input
+          type="radio"
+          name="number"
+          v-model="number"
+          value="15"
+          @change="changeLength"
+        />15</label
+      >
+    </div>
   </div>
 </template>
 
@@ -31,14 +60,19 @@ export default {
       prevTolltip: "Перейти к предыдущей странице",
       nextTolltip: "Перейти к следующей странице",
       activePage: 1,
+      number: 5,
     };
   },
   computed: {
     getPagginatorPages() {
-      return Math.ceil(this.pages / 5);
+      return Math.ceil(this.pages / +this.number);
     },
   },
   methods: {
+    changeLength() {
+      this.activePage = 1;
+      this.$emit("changeSize", +this.number);
+    },
     showPrevious() {
       this.activePage == 1
         ? (this.activePage = this.getPagginatorPages)

@@ -21,6 +21,7 @@
       v-if="shoppingList.length > 5"
       :pages="shoppingList.length"
       @changePage="showPage"
+      @changeSize="changeSize"
     />
   </div>
 </template>
@@ -44,12 +45,18 @@ export default {
       shoppingList: [],
       firstItem: 0,
       lastItem: 5,
+      pageSize: 5,
     };
   },
   methods: {
+    changeSize(number) {
+      this.pageSize = number;
+      this.lastItem = number;
+      this.firstItem = 0;
+    },
     showPage(page) {
-      this.firstItem = (page - 1) * 5;
-      this.lastItem = page * 5;
+      this.firstItem = (page - 1) * this.pageSize;
+      this.lastItem = page * this.pageSize;
     },
     showAddToshoppingListForm() {
       this.isVisibleForm = !this.isVisibleForm;
