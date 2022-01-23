@@ -6,12 +6,8 @@
       <li class="shopping-list-item shopping-list-item__header">Category</li>
       <li class="shopping-list-item shopping-list-item__header">Value</li>
     </ul>
-    <ul
-      v-for="(item, index) in shoppingList"
-      :key="index"
-      class="shopping-list-items"
-    >
-      <li class="shopping-list-item">{{ index + 1 }}</li>
+    <ul v-for="item in shoppingList" :key="item.id" class="shopping-list-items">
+      <li class="shopping-list-item">{{ item.id }}</li>
       <li class="shopping-list-item">{{ item.date }}</li>
       <li class="shopping-list-item">{{ item.category }}</li>
       <li class="shopping-list-item">{{ item.value }}</li>
@@ -22,7 +18,6 @@
 <script>
 export default {
   name: "ShoppingList",
-  components: {},
   props: {
     shoppingList: {
       type: Array,

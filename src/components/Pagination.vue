@@ -1,13 +1,95 @@
 <template>
-  <div></div>
+  <div class="paggination">
+    <button class="paggination-btn" @click="showPrevious">
+      <span class="paggination-icon" :title="prevTolltip">☚</span>
+    </button>
+    <div
+      class="paggination-page"
+      v-for="item in getPagginatorPages"
+      :key="item"
+      :class="{ active: item == activePage }"
+    >
+      {{ item }}
+    </div>
+    <button class="paggination-btn" @click="showNext">
+      <span class="paggination-icon" :title="nextTolltip">☛</span>
+    </button>
+  </div>
 </template>
 
 <script>
 export default {
-  name: "Pagination ",
-  props: {},
+  name: "Pagination",
+  props: {
+    pages: {
+      type: Number,
+      default: () => 1,
+    },
+  },
+  data() {
+    return {
+      prevTolltip: "Перейти к предыдущей странице",
+      nextTolltip: "Перейти к следующей странице",
+      activePage: 1,
+    };
+  },
+  computed: {
+    getPagginatorPages() {
+      return Math.ceil(this.pages / 5);
+    },
+  },
+  methods: {
+    showPrevious() {
+      this.activePage == 1
+        ? (this.activePage = this.getPagginatorPages)
+        : this.activePage--;
+      this.$emit("changePage", this.activePage);
+    },
+    showNext() {
+      this.activePage == this.getPagginatorPages
+        ? (this.activePage = 1)
+        : this.activePage++;
+      this.$emit("changePage", this.activePage);
+    },
+  },
 };
 </script>
 
 <style scoped>
+.paggination {
+  padding: 10px;
+  display: flex;
+
+  box-shadow: 0 0 5px black;
+  align-items: center;
+}
+.paggination-page {
+  font-size: 12px;
+  height: 20px;
+  width: 20px;
+  line-height: 20px;
+  transition: 0.2s ease-in-out;
+}
+.active {
+  color: red;
+  transform: scale(2);
+}
+.paggination-btn {
+  border: none;
+  background: white;
+  height: 20px;
+  width: 20px;
+  position: relative;
+  cursor: pointer;
+  margin: 0 20px;
+  transition: 0.2s ease-in-out;
+}
+.paggination-btn:hover {
+  transform: scale(2);
+}
+.paggination-icon {
+  position: absolute;
+  display: block;
+  top: 0;
+}
 </style>

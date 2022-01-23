@@ -5,25 +5,35 @@
       type="number"
       placeholder="Value"
       v-model="value"
-      required
     />
     <input
       class="add-to-list-field"
       placeholder="Category"
       v-model="category"
-      required
     />
     <input class="add-to-list-field" placeholder="Date" v-model="date" />
-    <button class="add-to-list-btn" @click="addToList">Save!</button>
+    <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
+      ADD +
+    </button>
+    <button class="add-to-list-btn" @click="resetForm" :title="clearTolltip">
+      CLEAR
+    </button>
   </div>
 </template>
 
 <script>
 export default {
   name: "AddToShoppingList",
-  props: {},
+  props: {
+    items: {
+      type: Number,
+      default: () => 1,
+    },
+  },
   data() {
     return {
+      addTolltip: "Добавить заметку в список",
+      clearTolltip: "Очистить поля ввода данных",
       value: "",
       category: "",
       date: "",
@@ -39,8 +49,14 @@ export default {
     },
   },
   methods: {
+    resetForm() {
+      this.value = "";
+      this.category = "";
+      this.date = "";
+    },
     addToList() {
       const data = {
+        id: this.items + 1,
         value: this.value,
         category: this.category,
         date: this.date || this.getCurrentDate,
@@ -74,6 +90,7 @@ export default {
   border: none;
   align-self: flex-end;
   transition: 0.1s ease-in-out;
+  margin: 10px;
 }
 .add-to-list-btn:active {
   transform: translateY(5px);
