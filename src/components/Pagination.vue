@@ -110,6 +110,9 @@ export default {
   transition: 0.2s ease-in-out;
   cursor: pointer;
 }
+.paggination-page:hover {
+  transform: scale(2);
+}
 .active {
   color: red;
   transform: scale(2);
