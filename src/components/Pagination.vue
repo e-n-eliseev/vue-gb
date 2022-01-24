@@ -8,6 +8,7 @@
       v-for="item in getPagginatorPages"
       :key="item"
       :class="{ active: item == activePage }"
+      @click="choosePage(item)"
     >
       {{ item }}
     </div>
@@ -69,6 +70,10 @@ export default {
     },
   },
   methods: {
+    choosePage(item) {
+      this.activePage = item;
+      this.$emit("changePage", this.activePage);
+    },
     changeLength() {
       this.activePage = 1;
       this.$emit("changeSize", +this.number);
@@ -93,7 +98,7 @@ export default {
 .paggination {
   padding: 10px;
   display: flex;
-
+  gap: 20px;
   box-shadow: 0 0 5px black;
   align-items: center;
 }
@@ -103,6 +108,7 @@ export default {
   width: 20px;
   line-height: 20px;
   transition: 0.2s ease-in-out;
+  cursor: pointer;
 }
 .active {
   color: red;

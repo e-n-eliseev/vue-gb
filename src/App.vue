@@ -20,6 +20,7 @@
     <Pagination
       v-if="shoppingList.length > 5"
       :pages="shoppingList.length"
+      @choosePage="showPage"
       @changePage="showPage"
       @changeSize="changeSize"
     />
