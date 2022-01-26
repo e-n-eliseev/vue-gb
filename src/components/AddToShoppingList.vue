@@ -12,9 +12,23 @@
       v-model="category"
     />
     <input class="add-to-list-field" placeholder="Date" v-model="date" />
-    <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
-      ADD +
-    </button>
+    <div class="add-to-category">
+      <input
+        class="add-to-category-field"
+        placeholder="Введите новую категорию"
+        v-model="newCategory"
+      />
+      <button
+        class="add-to-list-btn"
+        @click="addToCategory"
+        :title="addCategoryTolltip"
+      >
+        ADD +
+      </button>
+      <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
+        ADD +
+      </button>
+    </div>
     <button class="add-to-list-btn" @click="resetForm" :title="clearTolltip">
       CLEAR
     </button>
@@ -29,14 +43,20 @@ export default {
       type: Number,
       default: () => 1,
     },
+    categoryList: {
+      type: Array,
+      default: () => [],
+    },
   },
   data() {
     return {
       addTolltip: "Добавить заметку в список",
+      addCategoryTolltip: "Добавить новую категорию в список",
       clearTolltip: "Очистить поля ввода данных",
       value: "",
       category: "",
       date: "",
+      newCategory: "",
     };
   },
   computed: {
@@ -62,6 +82,11 @@ export default {
         date: this.date || this.getCurrentDate,
       };
       this.$emit("addToList", data);
+    },
+    addToCategory() {
+      if (!this.categoryList.includes(this.newCategory)) {
+        this.$emit("addToCategory", this.newCategory);
+      }
     },
   },
 };
@@ -90,13 +115,14 @@ export default {
   border: none;
   align-self: flex-end;
   transition: 0.1s ease-in-out;
-  margin: 10px;
+  margin: 10px 0;
 }
 .add-to-list-btn:active {
   transform: translateY(5px);
   box-shadow: 0 0px 0px black;
 }
-.add-to-list-field {
+.add-to-list-field,
+.add-to-category-field {
   width: 600px;
   height: 30px;
   margin: 10px 0;
@@ -104,5 +130,13 @@ export default {
   border: none;
   border-radius: 5px;
   padding-left: 20px;
+}
+.add-to-category-field {
+  width: 200px;
+}
+.add-to-category {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
 }
 </style>
