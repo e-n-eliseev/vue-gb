@@ -43,7 +43,7 @@ export default {
     return {
       addFormTolltip: "Открыть/закрыть окно добавления элемента списка",
       isVisibleForm: false,
-      shoppingList: [],
+      //shoppingList: [],
       firstItem: 0,
       lastItem: 5,
       pageSize: 5,
