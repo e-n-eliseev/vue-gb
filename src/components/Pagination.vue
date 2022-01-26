@@ -97,6 +97,7 @@ export default {
 <style scoped>
 .paggination {
   padding: 10px;
+  margin: 20px;
   display: flex;
   gap: 20px;
   box-shadow: 0 0 5px black;
