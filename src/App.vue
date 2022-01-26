@@ -11,7 +11,6 @@
     <AddToShoppingList
       v-if="isVisibleForm"
       :items="length"
-      :categoryList="categoryList"
       @addToList="addItemToList"
       @addToCategory="addItemToCategoryList"
     />
@@ -57,9 +56,6 @@ export default {
     },
     shoppingList() {
       return this.$store.getters.getShoppingList;
-    },
-    categoryList() {
-      return this.$store.getters.getCategoryList;
     },
     length() {
       return this.shoppingList.length;
@@ -116,8 +112,8 @@ h1 {
   color: aliceblue;
   background: green;
   border-radius: 10px;
-  width: 200px;
-  height: 50px;
+  min-width: 130px;
+  min-height: 30px;
   box-shadow: 0 5px 5px black;
   border: none;
   transition: 0.1s ease-in-out;

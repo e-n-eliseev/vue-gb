@@ -6,16 +6,21 @@
       placeholder="Value"
       v-model="value"
     />
-    <input
+    <!-- <input
       class="add-to-list-field"
       placeholder="Category"
       v-model="category"
-    />
+    /> -->
+    <select v-model="category" class="add-to-category-list-field">
+      <option class="options" v-for="(item, idx) in categoryList" :key="idx">
+        {{ item }}
+      </option>
+    </select>
     <input class="add-to-list-field" placeholder="Date" v-model="date" />
     <div class="add-to-category">
       <input
         class="add-to-category-field"
-        placeholder="Введите новую категорию"
+        placeholder="Type a new category"
         v-model="newCategory"
       />
       <button
@@ -23,14 +28,14 @@
         @click="addToCategory"
         :title="addCategoryTolltip"
       >
-        ADD +
+        ADD a category
       </button>
       <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
-        ADD +
+        ADD a note to the list
       </button>
     </div>
     <button class="add-to-list-btn" @click="resetForm" :title="clearTolltip">
-      CLEAR
+      CLEAR input data
     </button>
   </div>
 </template>
@@ -42,10 +47,6 @@ export default {
     items: {
       type: Number,
       default: () => 1,
-    },
-    categoryList: {
-      type: Array,
-      default: () => [],
     },
   },
   data() {
@@ -67,6 +68,9 @@ export default {
       const y = today.getFullYear();
       return `${d}.${m}.${y}`;
     },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
+    },
   },
   methods: {
     resetForm() {
@@ -77,7 +81,7 @@ export default {
     addToList() {
       const data = {
         id: this.items + 1,
-        value: this.value,
+        value: +this.value,
         category: this.category,
         date: this.date || this.getCurrentDate,
       };
@@ -86,6 +90,7 @@ export default {
     addToCategory() {
       if (!this.categoryList.includes(this.newCategory)) {
         this.$emit("addToCategory", this.newCategory);
+        this.newCategory = "";
       }
     },
   },
@@ -109,7 +114,7 @@ export default {
   color: aliceblue;
   background: green;
   border-radius: 10px;
-  width: 100px;
+  min-width: 100px;
   height: 30px;
   box-shadow: 0 5px 5px black;
   border: none;
@@ -122,7 +127,8 @@ export default {
   box-shadow: 0 0px 0px black;
 }
 .add-to-list-field,
-.add-to-category-field {
+.add-to-category-field,
+.add-to-category-list-field {
   width: 600px;
   height: 30px;
   margin: 10px 0;
@@ -130,6 +136,12 @@ export default {
   border: none;
   border-radius: 5px;
   padding-left: 20px;
+}
+.options {
+  font-size: 12px;
+}
+.add-to-category-list-field {
+  width: 621px;
 }
 .add-to-category-field {
   width: 200px;
