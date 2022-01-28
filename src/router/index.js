@@ -9,7 +9,7 @@ Vue.use(VueRouter)
 
 const routes = [
     {
-        path: '/shoppingage',
+        path: '/shoppingpage',
         name: 'ShoppingPage',
         component: ShoppingPage
     },
