@@ -8,12 +8,30 @@
     >
       Add new cost +
     </button>
-    <AddToShoppingList
-      v-if="isVisibleForm"
-      :items="length"
-      @addToList="addItemToList"
-      @addToCategory="addItemToCategoryList"
-    />
+    <div class="quick-add">
+      <button
+        class="showAddToshoppingListFormBtn"
+        :title="quickAddFormTolltip"
+        @click="addFood"
+      >
+        You can quick add: category:food,price:200
+      </button>
+      <button
+        class="showAddToshoppingListFormBtn"
+        :title="quickAddFormTolltip"
+        @click="addTransport"
+      >
+        You can quick add: category:transport, price:50
+      </button>
+      <button
+        class="showAddToshoppingListFormBtn"
+        :title="quickAddFormTolltip"
+        @click="addEntertainment"
+      >
+        You can quick add: entertainment, price:2000
+      </button>
+    </div>
+    <AddToShoppingList v-if="isVisibleForm" />
     <ShoppingList
       v-if="shoppingList.length"
       :shoppingList="shoppingList.slice(this.firstItem, this.lastItem)"
@@ -44,10 +62,12 @@ export default {
   data() {
     return {
       addFormTolltip: "Открыть/закрыть окно добавления элемента списка",
+      quickAddFormTolltip: "кнопка быстрого добавления товара",
       isVisibleForm: false,
       firstItem: 0,
       lastItem: 5,
       pageSize: 5,
+      page: 1,
     };
   },
   computed: {
@@ -68,19 +88,48 @@ export default {
       this.firstItem = 0;
     },
     showPage(page) {
+      this.page = page;
       this.firstItem = (page - 1) * this.pageSize;
       this.lastItem = page * this.pageSize;
     },
     showAddToshoppingListForm() {
       this.isVisibleForm = !this.isVisibleForm;
     },
-    addItemToList(data) {
-      this.$store.commit("addDataToShoppingList", data);
+    addFood() {
+      this.$router.push({
+        name: "AddToShoppingList",
+        query: {
+          value: +200,
+        },
+        params: {
+          category: "Food",
+        },
+      });
     },
-    addItemToCategoryList(data) {
-      this.$store.commit("addDataToCategoryList", data);
+    addTransport() {
+      this.$router.push({
+        name: "AddToShoppingList",
+        params: {
+          category: "Transport",
+        },
+        query: {
+          value: +50,
+        },
+      });
+    },
+    addEntertainment() {
+      this.$router.push({
+        name: "AddToShoppingList",
+        params: {
+          category: "Entertainment",
+        },
+        query: {
+          value: +2000,
+        },
+      });
     },
   },
+  //получаем данные при создании компонента
   created() {
     this.$store.dispatch("fetchData");
     this.$store.dispatch("loadCategories");
@@ -110,9 +159,14 @@ h1 {
   box-shadow: 0 5px 5px black;
   border: none;
   transition: 0.1s ease-in-out;
+  margin: 10px 0;
 }
 .showAddToshoppingListFormBtn:active {
   transform: translateY(5px);
   box-shadow: 0 0px 0px black;
+}
+.quick-add {
+  display: flex;
+  flex-direction: column;
 }
 </style>

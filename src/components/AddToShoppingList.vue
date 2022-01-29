@@ -43,21 +43,15 @@
 <script>
 export default {
   name: "AddToShoppingList",
-  props: {
-    items: {
-      type: Number,
-      default: () => 1,
-    },
-  },
   data() {
     return {
       addTolltip: "Добавить заметку в список",
       addCategoryTolltip: "Добавить новую категорию в список",
       clearTolltip: "Очистить поля ввода данных",
+      newCategory: "",
+      date: "",
       value: "",
       category: "",
-      date: "",
-      newCategory: "",
     };
   },
   computed: {
@@ -71,6 +65,12 @@ export default {
     categoryList() {
       return this.$store.getters.getCategoryList;
     },
+    shoppingList() {
+      return this.$store.getters.getShoppingList;
+    },
+    length() {
+      return this.shoppingList.length;
+    },
   },
   methods: {
     resetForm() {
@@ -80,19 +80,32 @@ export default {
     },
     addToList() {
       const data = {
-        id: this.items + 1,
+        id: this.length + 1,
         value: +this.value,
         category: this.category,
         date: this.date || this.getCurrentDate,
       };
-      this.$emit("addToList", data);
+      this.$store.commit("addDataToShoppingList", data);
     },
     addToCategory() {
       if (!this.categoryList.includes(this.newCategory)) {
-        this.$emit("addToCategory", this.newCategory);
+        this.$store.commit("addDataToCategoryList", this.newCategory);
         this.newCategory = "";
       }
     },
+  },
+  //получение и присвоение данных при отрисовке
+  mounted() {
+    this.value = this.$route.query.value;
+    this.category = this.$route.params.category;
+    if (this.value && this.category) {
+      this.addToList();
+      alert("Добавлен новый элемент в список");
+    } else {
+      alert(
+        "Заполните данные в форме и нажмите кнопку 'ADD a note to the list'"
+      );
+    }
   },
 };
 </script>
@@ -100,7 +113,7 @@ export default {
 <style scoped>
 .add-to-list {
   width: 700px;
-  margin: 20px 0;
+  margin: 20px auto;
   padding: 10px 37px 10px;
   border: 1px solid black;
   box-shadow: 0 0 5px black;
