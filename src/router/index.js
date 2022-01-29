@@ -15,6 +15,11 @@ const routes = [
         component: ShoppingPage
     },
     {
+        path: '/shoppingpage/:activePage',
+        name: 'ShoppingPages',
+        component: ShoppingPage
+    },
+    {
         path: '/about',
         name: 'About',
         component: About

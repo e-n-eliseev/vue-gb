@@ -1,11 +1,11 @@
 <template>
-  <div class="paggination">
+  <div class="paggination" @click="pagginatorRoute">
     <button class="paggination-btn" @click="showPrevious">
       <span class="paggination-icon" :title="prevTolltip">☚</span>
     </button>
     <div
       class="paggination-page"
-      v-for="item in getPagginatorPages"
+      v-for="item in pagginatorPages"
       :key="item"
       :class="{ active: item == activePage }"
       @click="choosePage(item)"
@@ -20,7 +20,7 @@
         ><input
           type="radio"
           name="number"
-          v-model="number"
+          v-model="newPageSize"
           value="5"
           @change="changeLength"
         />5</label
@@ -29,7 +29,7 @@
         ><input
           type="radio"
           name="number"
-          v-model="number"
+          v-model="newPageSize"
           value="10"
           @change="changeLength"
         />10</label
@@ -38,7 +38,7 @@
         ><input
           type="radio"
           name="number"
-          v-model="number"
+          v-model="newPageSize"
           value="15"
           @change="changeLength"
         />15</label
@@ -51,7 +51,15 @@
 export default {
   name: "Pagination",
   props: {
-    pages: {
+    length: {
+      type: Number,
+      default: () => 1,
+    },
+    activePage: {
+      type: Number,
+      default: () => 1,
+    },
+    pageSize: {
       type: Number,
       default: () => 1,
     },
@@ -60,35 +68,42 @@ export default {
     return {
       prevTolltip: "Перейти к предыдущей странице",
       nextTolltip: "Перейти к следующей странице",
-      activePage: 1,
-      number: 5,
+      newPageSize: this.pageSize,
     };
   },
   computed: {
-    getPagginatorPages() {
-      return Math.ceil(this.pages / +this.number);
+    pagginatorPages() {
+      return Math.ceil(this.length / +this.pageSize);
     },
   },
   methods: {
+    pagginatorRoute() {
+      if (this.activePage == this.$route.params.activePage) {
+        return;
+      }
+      this.$router.push({
+        name: "ShoppingPages",
+        params: {
+          activePage: this.activePage,
+        },
+      });
+    },
     choosePage(item) {
-      this.activePage = item;
-      this.$emit("changePage", this.activePage);
+      this.$emit("changePage", item);
     },
     changeLength() {
-      this.activePage = 1;
-      this.$emit("changeSize", +this.number);
+      this.$emit("changePage", 1);
+      this.$emit("changeSize", +this.newPageSize);
     },
     showPrevious() {
       this.activePage == 1
-        ? (this.activePage = this.getPagginatorPages)
-        : this.activePage--;
-      this.$emit("changePage", this.activePage);
+        ? this.$emit("changePage", this.pagginatorPages)
+        : this.$emit("changePage", this.activePage - 1);
     },
     showNext() {
-      this.activePage == this.getPagginatorPages
-        ? (this.activePage = 1)
-        : this.activePage++;
-      this.$emit("changePage", this.activePage);
+      this.activePage == this.pagginatorPages
+        ? this.$emit("changePage", 1)
+        : this.$emit("changePage", this.activePage + 1);
     },
   },
 };

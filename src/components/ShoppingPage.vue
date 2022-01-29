@@ -33,13 +33,15 @@
     </div>
     <AddToShoppingList v-if="isVisibleForm" />
     <ShoppingList
-      v-if="shoppingList.length"
+      v-if="length"
       :shoppingList="shoppingList.slice(this.firstItem, this.lastItem)"
     />
-    <div v-if="shoppingList.length">Итого затрат:{{ getFSV }}</div>
+    <div v-if="length">Итого затрат:{{ getFSV }}</div>
     <Pagination
       v-if="length > pageSize"
-      :pages="length"
+      :length="length"
+      :activePage="activePage"
+      :pageSize="pageSize"
       @choosePage="showPage"
       @changePage="showPage"
       @changeSize="changeSize"
@@ -67,7 +69,7 @@ export default {
       firstItem: 0,
       lastItem: 5,
       pageSize: 5,
-      page: 1,
+      activePage: 1,
     };
   },
   computed: {
@@ -88,9 +90,9 @@ export default {
       this.firstItem = 0;
     },
     showPage(page) {
-      this.page = page;
-      this.firstItem = (page - 1) * this.pageSize;
-      this.lastItem = page * this.pageSize;
+      this.activePage = page;
+      this.firstItem = (this.activePage - 1) * this.pageSize;
+      this.lastItem = this.activePage * this.pageSize;
     },
     showAddToshoppingListForm() {
       this.isVisibleForm = !this.isVisibleForm;
@@ -131,6 +133,11 @@ export default {
   },
   //получаем данные при создании компонента
   created() {
+    const { activePage } = this.$route.params;
+    if (activePage) {
+      this.activePage = +activePage;
+      //this.showPage(this.activePage);
+    }
     this.$store.dispatch("fetchData");
     this.$store.dispatch("loadCategories");
   },
@@ -139,7 +146,7 @@ export default {
 
 <style>
 .wrapper {
-  width: 1200px;
+  max-width: 1200px;
   display: flex;
   flex-direction: column;
   align-items: center;

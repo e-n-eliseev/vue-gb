@@ -81,7 +81,7 @@ export default {
     addToList() {
       const data = {
         id: this.length + 1,
-        value: +this.value,
+        value: +this.value || 0,
         category: this.category,
         date: this.date || this.getCurrentDate,
       };
@@ -112,7 +112,7 @@ export default {
 
 <style scoped>
 .add-to-list {
-  width: 700px;
+  max-width: 700px;
   margin: 20px auto;
   padding: 10px 37px 10px;
   border: 1px solid black;
@@ -154,7 +154,7 @@ export default {
   font-size: 12px;
 }
 .add-to-category-list-field {
-  width: 621px;
+  max-width: 621px;
 }
 .add-to-category-field {
   width: 200px;
