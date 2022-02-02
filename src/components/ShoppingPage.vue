@@ -136,7 +136,6 @@ export default {
     const { activePage } = this.$route.params;
     if (activePage) {
       this.activePage = +activePage;
-      //this.showPage(this.activePage);
     }
     this.$store.dispatch("fetchData");
     this.$store.dispatch("loadCategories");
