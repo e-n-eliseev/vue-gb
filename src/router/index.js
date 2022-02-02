@@ -10,11 +10,6 @@ Vue.use(VueRouter)
 //пути пеерехода
 const routes = [
     {
-        path: '/shoppingpage',
-        name: 'ShoppingPage',
-        component: ShoppingPage
-    },
-    {
         path: '/shoppingpage/:activePage',
         name: 'ShoppingPages',
         component: ShoppingPage
