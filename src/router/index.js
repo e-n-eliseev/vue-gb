@@ -44,7 +44,7 @@ const router = new VueRouter({
 //подписи страниц при роутинге
 const getTitleByRouteName = routeName => {
     return {
-        'ShoppingPage': 'Take a look on your shopping activity and add more!',
+        'ShoppingPages': 'Take a look on your shopping activity and add more!',
         'About': 'A piece of information about this app',
         'Welcome': 'Welcome to shopping list aplication',
         'AddToShoppingList': 'Your information is added automatically',
