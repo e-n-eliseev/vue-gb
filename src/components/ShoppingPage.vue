@@ -3,8 +3,8 @@
     <h1>My personal shipping list.</h1>
     <button
       class="showAddToshoppingListFormBtn"
-      @click="showAddToshoppingListForm"
       :title="addFormTolltip"
+      @click="onShowModal"
     >
       Add new cost +
     </button>
@@ -31,7 +31,6 @@
         You can quick add: entertainment, price:2000
       </button>
     </div>
-    <AddToShoppingList v-if="isVisibleForm" />
     <ShoppingList
       v-if="length"
       :shoppingList="shoppingList.slice(this.firstItem, this.lastItem)"
@@ -50,22 +49,16 @@
 </template>
 
 <script>
-import AddToShoppingList from "./AddToShoppingList.vue";
-import ShoppingList from "./ShoppingList .vue";
-import Pagination from "./Pagination.vue";
-
 export default {
   name: "ShoppingPage",
   components: {
-    ShoppingList,
-    AddToShoppingList,
-    Pagination,
+    ShoppingList: () => import("./ShoppingList .vue"),
+    Pagination: () => import("./Pagination.vue"),
   },
   data() {
     return {
       addFormTolltip: "Открыть/закрыть окно добавления элемента списка",
       quickAddFormTolltip: "кнопка быстрого добавления товара",
-      isVisibleForm: false,
       firstItem: 0,
       lastItem: 5,
       pageSize: 5,
@@ -84,6 +77,12 @@ export default {
     },
   },
   methods: {
+    onShowModal() {
+      this.$modal.show("AddToShoppingList", {
+        header: "Add to shopping list form",
+        content: "AddToShoppingList",
+      });
+    },
     changeSize(number) {
       this.pageSize = number;
       this.lastItem = number;
@@ -137,8 +136,6 @@ export default {
     if (activePage) {
       this.activePage = +activePage;
     }
-    this.$store.dispatch("fetchData");
-    this.$store.dispatch("loadCategories");
   },
 };
 </script>

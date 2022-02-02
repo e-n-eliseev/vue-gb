@@ -5,8 +5,48 @@
       <router-link to="/about">About</router-link>
     </div>
     <router-view />
+    <transition name="fade">
+      <modal-window :settings="settings" v-if="modalWindowName" />
+    </transition>
   </div>
 </template>
+<script>
+export default {
+  components: {
+    ModalWindow: () =>
+      import(/* webpackChunkName: 'Modal' */ "./components/ModalWindow.vue"),
+  },
+  name: "App",
+  data() {
+    return {
+      modalWindowName: "",
+      settings: {},
+    };
+  },
+  methods: {
+    onShown(settings) {
+      this.modalWindowName = settings.name;
+      this.settings = settings;
+    },
+    onHide() {
+      this.modalWindowName = "";
+      this.settings = {};
+    },
+  },
+  created() {
+    this.$store.dispatch("fetchData");
+    this.$store.dispatch("loadCategories");
+  },
+  mounted() {
+    this.$modal.EventBus.$on("show", this.onShown);
+    this.$modal.EventBus.$on("hide", this.onHide);
+  },
+  beforeDestroy() {
+    this.$modal.EventBus.$off("show", this.onShown);
+    this.$modal.EventBus.$off("hide", this.onHide);
+  },
+};
+</script>
 
 <style scoped>
 #app {
@@ -26,6 +66,15 @@ a {
 }
 a.router-link-exact-active {
   color: #42b983;
+}
+.fade-enter-active,
+.fade-leave-active {
+  transition: opacity 0.3s;
+}
+
+.fade-enter,
+.fade-leave-to {
+  opacity: 0;
 }
 </style>
 

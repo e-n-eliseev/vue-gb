@@ -118,6 +118,7 @@ export default {
   border: 1px solid black;
   box-shadow: 0 0 5px black;
   display: flex;
+  background-color: aliceblue;
   flex-direction: column;
   align-items: center;
   border-radius: 10px;

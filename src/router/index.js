@@ -1,10 +1,5 @@
-import Vue from 'vue'
-import VueRouter from 'vue-router'
-import ShoppingPage from '../components/ShoppingPage';
-import About from '../components/About';
-import Welcome from "../components/Welcome.vue";
-import PageNotFound from "../components/PageNotFound.vue";
-import AddToShoppingList from "../components/AddToShoppingList.vue";
+import Vue from 'vue';
+import VueRouter from 'vue-router';
 
 Vue.use(VueRouter)
 //пути пеерехода
@@ -12,27 +7,31 @@ const routes = [
     {
         path: '/shoppingpage/:activePage',
         name: 'ShoppingPages',
-        component: ShoppingPage
+        component: () => import(/* webpackChunkName: "Home" */
+            '../components/ShoppingPage.vue')
     },
     {
         path: '/about',
         name: 'About',
-        component: About
+        component: () => import(/* webpackChunkName: "Home" */
+            '../components/About.vue')
     },
     {
         path: '/',
         name: 'Welcome',
-        component: Welcome
+        component: () => import(/* webpackChunkName: "Home" */
+            '../components/Welcome.vue')
     },
     {
         path: '/add/payment/:category',
         name: 'AddToShoppingList',
-        component: AddToShoppingList
+        component: () => import(/* webpackChunkName: "Home" */
+            '../components/AddToShoppingList.vue')
     },
     {
         path: '*',
         name: 'PageNotFound',
-        component: PageNotFound
+        component: () => import(/* webpackChunkName: "Home" */ '../components/PageNotFound.vue')
     }
 ]
 
@@ -41,6 +40,7 @@ const router = new VueRouter({
     base: process.env.BASE_URL,
     routes
 })
+
 //подписи страниц при роутинге
 const getTitleByRouteName = routeName => {
     return {
