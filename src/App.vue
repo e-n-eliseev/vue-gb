@@ -30,7 +30,10 @@ export default {
   },
   methods: {
     hideContextMenu() {
-      if (!event.target.closest(".context-menu-btn")) {
+      if (
+        !event.target.closest(".context-menu-btn") &&
+        !event.target.closest(".wrapperContext")
+      ) {
         this.$context.hide();
       }
     },
@@ -43,10 +46,14 @@ export default {
       this.settings = {};
     },
     onShownContext(context) {
-      this.contextMenuX = context.contextMenuX;
-      this.contextMenuY = context.contextMenuY;
-      this.id = context.id;
-      this.context = context;
+      if (!this.id) {
+        this.contextMenuX = context.contextMenuX;
+        this.contextMenuY = context.contextMenuY;
+        this.id = context.id;
+        this.context = context;
+      } else {
+        this.$context.hide();
+      }
     },
     onHideContext() {
       this.id = "";
