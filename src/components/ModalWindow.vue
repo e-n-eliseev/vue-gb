@@ -4,7 +4,7 @@
       {{ settings.header }}
     </div>
     <div class="content">
-      <component :is="settings.content" />
+      <component :is="settings.content" :settings="{ ...settings }" />
     </div>
     <div class="footer">
       <button class="add-to-list-btn" @click="onClose">Close</button>

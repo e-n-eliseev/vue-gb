@@ -33,6 +33,14 @@
       <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
         ADD a note to the list
       </button>
+      <button
+        v-if="addButtonVision"
+        class="add-to-list-btn"
+        @click="changeDataInTheList"
+        :title="addTolltip"
+      >
+        Save changes
+      </button>
     </div>
     <button class="add-to-list-btn" @click="resetForm" :title="clearTolltip">
       CLEAR input data
@@ -49,9 +57,11 @@ export default {
       addCategoryTolltip: "Добавить новую категорию в список",
       clearTolltip: "Очистить поля ввода данных",
       newCategory: "",
-      date: "",
-      value: "",
-      category: "",
+      date: this.$attrs.settings?.date || "",
+      value: this.$route.query.value || this.$attrs?.settings.value || "",
+      category:
+        this.$route.params.category || this.$attrs?.settings.category || "",
+      addButtonVision: this.$attrs.settings?.addButtonVision || false,
     };
   },
   computed: {
@@ -85,6 +95,7 @@ export default {
         category: this.category,
         date: this.date || this.getCurrentDate,
       };
+      console.log(data);
       this.$store.commit("addDataToShoppingList", data);
     },
     addToCategory() {
@@ -93,18 +104,22 @@ export default {
         this.newCategory = "";
       }
     },
+    changeDataInTheList() {
+      const data = {
+        id: this.$attrs.settings.id,
+        value: this.value,
+        category: this.category,
+        date: this.date || this.getCurrentDate,
+      };
+      console.log(data);
+      this.$store.commit("changeDataToShoppingList", data);
+    },
   },
   //получение и присвоение данных при отрисовке
   mounted() {
-    this.value = this.$route.query.value;
-    this.category = this.$route.params.category;
-    if (this.value && this.category) {
+    if (this.value && this.category && !this.addButtonVision) {
       this.addToList();
       alert("Добавлен новый элемент в список");
-    } else {
-      alert(
-        "Заполните данные в форме и нажмите кнопку 'ADD a note to the list'"
-      );
     }
   },
 };
