@@ -75,7 +75,7 @@ export default {
       return this.shoppingList.length;
     },
     lastItem() {
-      return this.activePage * 5;
+      return this.activePage * this.pageSize;
     },
     firstItem() {
       return this.lastItem - this.pageSize;
@@ -90,8 +90,8 @@ export default {
     },
     changeSize(number) {
       this.pageSize = number;
-      this.lastItem = number;
-      this.firstItem = 0;
+      this.lastItem;
+      this.firstItem;
     },
     showPage(page) {
       this.activePage = page;
