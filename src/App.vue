@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" @click="hideContextMenu">
     <div id="nav">
       <router-link to="/shoppingpage/1">ShoppingPage</router-link> |
       <router-link to="/about">About</router-link>
@@ -29,6 +29,11 @@ export default {
     };
   },
   methods: {
+    hideContextMenu() {
+      if (!event.target.closest(".context-menu-btn")) {
+        this.$context.hide();
+      }
+    },
     onShown(settings) {
       this.modalWindowName = settings.name;
       this.settings = settings;
@@ -74,6 +79,7 @@ export default {
   -moz-osx-font-smoothing: grayscale;
   text-align: center;
   color: #2c3e50;
+  height: 100vh;
 }
 
 #nav {

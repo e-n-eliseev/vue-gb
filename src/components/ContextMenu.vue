@@ -47,9 +47,9 @@ export default {
     },
   },
   mounted() {
-    const menu = document.querySelector(".wrapperContext");
-    menu.style.top = parseInt(this.context.contextMenuY) + "px";
-    menu.style.left = parseInt(this.context.contextMenuX) + "px";
+    const contextMenu = document.querySelector(".wrapperContext");
+    contextMenu.style.top = parseInt(this.context.contextMenuY) + "px";
+    contextMenu.style.left = parseInt(this.context.contextMenuX) + "px";
   },
 };
 </script>
