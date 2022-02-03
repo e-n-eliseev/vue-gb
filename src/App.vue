@@ -7,6 +7,7 @@
     <router-view />
     <transition name="fade">
       <modal-window :settings="settings" v-if="modalWindowName" />
+      <context-menu :context="context" v-if="id" />
     </transition>
   </div>
 </template>
@@ -15,12 +16,16 @@ export default {
   components: {
     ModalWindow: () =>
       import(/* webpackChunkName: 'Modal' */ "./components/ModalWindow.vue"),
+    ContextMenu: () =>
+      import(/* webpackChunkName: 'Modal' */ "./components/ContextMenu.vue"),
   },
   name: "App",
   data() {
     return {
       modalWindowName: "",
       settings: {},
+      id: "",
+      context: {},
     };
   },
   methods: {
@@ -32,6 +37,15 @@ export default {
       this.modalWindowName = "";
       this.settings = {};
     },
+    onShownContext(context) {
+      this.contextMenuX = context.contextMenuX;
+      this.contextMenuY = context.contextMenuY;
+      this.id = context.id;
+      this.context = context;
+    },
+    onHideContext() {
+      this.context = {};
+    },
   },
   created() {
     this.$store.dispatch("fetchData");
@@ -40,10 +54,14 @@ export default {
   mounted() {
     this.$modal.EventBus.$on("show", this.onShown);
     this.$modal.EventBus.$on("hide", this.onHide);
+    this.$context.EventBus.$on("show", this.onShownContext);
+    this.$context.EventBus.$on("hide", this.onHideContext);
   },
   beforeDestroy() {
     this.$modal.EventBus.$off("show", this.onShown);
     this.$modal.EventBus.$off("hide", this.onHide);
+    this.$context.EventBus.$off("show", this.onShown);
+    this.$context.EventBus.$off("hide", this.onHideContext);
   },
 };
 </script>
