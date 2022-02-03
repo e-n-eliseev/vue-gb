@@ -50,8 +50,8 @@ export default {
       clearTolltip: "Очистить поля ввода данных",
       newCategory: "",
       date: "",
-      value: "",
-      category: "",
+      value: this.$route.query.value || "",
+      category: this.$route.params.category || "",
     };
   },
   computed: {
@@ -96,15 +96,9 @@ export default {
   },
   //получение и присвоение данных при отрисовке
   mounted() {
-    this.value = this.$route.query.value;
-    this.category = this.$route.params.category;
     if (this.value && this.category) {
       this.addToList();
       alert("Добавлен новый элемент в список");
-    } else {
-      alert(
-        "Заполните данные в форме и нажмите кнопку 'ADD a note to the list'"
-      );
     }
   },
 };
