@@ -60,8 +60,6 @@ export default {
     return {
       addFormTolltip: "Открыть/закрыть окно добавления элемента списка",
       quickAddFormTolltip: "кнопка быстрого добавления товара",
-      firstItem: 0,
-      lastItem: 5,
       pageSize: 5,
       activePage: 1,
     };
@@ -75,6 +73,12 @@ export default {
     },
     length() {
       return this.shoppingList.length;
+    },
+    lastItem() {
+      return this.activePage * 5;
+    },
+    firstItem() {
+      return this.lastItem - this.pageSize;
     },
   },
   methods: {
@@ -91,8 +95,6 @@ export default {
     },
     showPage(page) {
       this.activePage = page;
-      this.firstItem = (this.activePage - 1) * this.pageSize;
-      this.lastItem = this.activePage * this.pageSize;
     },
     showAddToshoppingListForm() {
       this.isVisibleForm = !this.isVisibleForm;

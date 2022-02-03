@@ -11,7 +11,7 @@ export default {
 
             show(settings) {
                 this.EventBus.$emit('show', { ...settings })
-                console.log('show', { ...settings })
+                console.log('show')
             },
 
             hide() {
