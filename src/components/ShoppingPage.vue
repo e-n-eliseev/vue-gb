@@ -34,6 +34,7 @@
     <ShoppingList
       v-if="length"
       :shoppingList="shoppingList.slice(this.firstItem, this.lastItem)"
+      :firstItemId="this.firstItem"
     />
     <div v-if="length">Итого затрат:{{ getFSV }}</div>
     <Pagination

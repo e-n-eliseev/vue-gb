@@ -44,6 +44,7 @@ export default {
       this.context = context;
     },
     onHideContext() {
+      this.id = "";
       this.context = {};
     },
   },

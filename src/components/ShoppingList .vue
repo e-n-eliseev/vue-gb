@@ -14,7 +14,7 @@
         {{ item.value }}
         <button
           class="context-menu-btn"
-          :Data-Id="item.id"
+          :Data-Id="shoppingList.indexOf(item) + firstItemId + 1"
           @click="showContextMenu"
         >
           <span class="context-menu-btn-icon"></span>
@@ -31,6 +31,10 @@ export default {
     shoppingList: {
       type: Array,
       default: () => [],
+    },
+    firstItemId: {
+      type: Number,
+      default: () => 0,
     },
   },
   methods: {

@@ -20,15 +20,16 @@ export default {
   methods: {
     deleteItemFromTheList() {
       this.$store.commit("deleteDataToShoppingList", this.context.id - 1);
+      this.onHideContext();
+    },
+    onHideContext() {
+      this.$context.hide();
     },
   },
   mounted() {
-    console.log(document.querySelector(".wrapperContext"));
     const menu = document.querySelector(".wrapperContext");
     menu.style.top = parseInt(this.context.contextMenuY) + "px";
-    console.log("top>", menu.style.top);
     menu.style.left = parseInt(this.context.contextMenuX) + "px";
-    console.log("left>", menu.style.left);
   },
 };
 </script>
