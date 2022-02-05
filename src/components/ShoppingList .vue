@@ -15,7 +15,7 @@
         <button
           class="context-menu-btn"
           :Data-Id="shoppingList.indexOf(item) + firstItemId + 1"
-          @click="showContextMenu"
+          @click="showContextMenu(item)"
         >
           <span class="context-menu-btn-icon"></span>
         </button>
@@ -38,16 +38,21 @@ export default {
     },
   },
   methods: {
-    showContextMenu(event) {
+    showContextMenuPos() {
       const targetPos = event.target.getBoundingClientRect();
-      const contextMenuX = `${targetPos.left - 110}`;
-      const contextMenuY = `${targetPos.top + 30}`;
-      const id = +event.target.closest(".context-menu-btn").dataset.id;
-
+      return {
+        contextMenuX: `${targetPos.left - 110}px`,
+        contextMenuY: `${targetPos.top + 30}px`,
+      };
+    },
+    showContextMenuId() {
+      return +event.target.closest(".context-menu-btn").dataset.id;
+    },
+    showContextMenu(item) {
       this.$context.show({
-        contextMenuX,
-        contextMenuY,
-        id,
+        ...this.showContextMenuPos(),
+        itemPos: this.showContextMenuId(),
+        ...item,
       });
     },
   },

@@ -46,14 +46,8 @@ export default {
       this.settings = {};
     },
     onShownContext(context) {
-      if (!this.id) {
-        this.contextMenuX = context.contextMenuX;
-        this.contextMenuY = context.contextMenuY;
-        this.id = context.id;
-        this.context = context;
-      } else {
-        this.$context.hide();
-      }
+      this.id = context.itemPos;
+      this.context = context;
     },
     onHideContext() {
       this.id = "";

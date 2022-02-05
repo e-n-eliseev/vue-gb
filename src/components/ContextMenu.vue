@@ -1,5 +1,5 @@
 <template>
-  <div class="wrapperContext">
+  <div class="wrapperContext" :style="style">
     <button class="context-menu-btn" @click="onShowModal">
       ✏ Редактировать
     </button>
@@ -19,38 +19,36 @@ export default {
     },
   },
   name: "ContextMenu",
+  computed: {
+    style() {
+      return {
+        top: this.context.contextMenuY,
+        left: this.context.contextMenuX,
+      };
+    },
+  },
   methods: {
     onShowModal() {
       this.$modal.show("ChangingListItem", {
         header: "Change shopping list item",
         content: "AddToShoppingList",
         addButtonVision: true,
-        date: this.changeItem.date,
-        value: this.changeItem.value,
-        category: this.changeItem.category,
-        itemId: this.changeItem.id,
-        itemPos: this.context.id - 1,
+        date: this.context.date,
+        value: this.context.value,
+        category: this.context.category,
+        itemId: this.context.id,
+        itemPos: this.context.itemPos - 1,
       });
       this.onHideContext();
       console.log(this.changeItem);
     },
     deleteItemFromTheList() {
-      this.$store.commit("deleteDataToShoppingList", this.context.id - 1);
+      this.$store.commit("deleteDataToShoppingList", this.context.itemPos - 1);
       this.onHideContext();
     },
     onHideContext() {
       this.$context.hide();
     },
-  },
-  computed: {
-    changeItem() {
-      return this.$store.getters.getShoppingList[this.context.id - 1];
-    },
-  },
-  mounted() {
-    const contextMenu = document.querySelector(".wrapperContext");
-    contextMenu.style.top = parseInt(this.context.contextMenuY) + "px";
-    contextMenu.style.left = parseInt(this.context.contextMenuX) + "px";
   },
 };
 </script>
