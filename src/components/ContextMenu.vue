@@ -40,7 +40,6 @@ export default {
         itemPos: this.context.itemPos - 1,
       });
       this.onHideContext();
-      console.log(this.changeItem);
     },
     deleteItemFromTheList() {
       this.$store.commit("deleteDataToShoppingList", this.context.itemPos - 1);
@@ -64,6 +63,8 @@ export default {
   left: 10px;
   background-color: white;
   padding: 10px 0;
+  transition: 0.2s;
+  border-radius: 5px;
 }
 .context-menu-btn {
   background: transparent;
