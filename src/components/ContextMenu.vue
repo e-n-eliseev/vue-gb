@@ -28,7 +28,8 @@ export default {
         date: this.changeItem.date,
         value: this.changeItem.value,
         category: this.changeItem.category,
-        id: this.context.id - 1,
+        itemId: this.changeItem.id,
+        itemPos: this.context.id - 1,
       });
       this.onHideContext();
       console.log(this.changeItem);

@@ -20,7 +20,7 @@ export default new Vuex.Store({
             state.shoppingList.splice(payload, 1)
         },
         changeDataToShoppingList(state, payload) {
-            state.shoppingList.splice(payload.id, 1, payload)
+            state.shoppingList.splice(payload.itemPos, 1, payload)
 
         },
         setCategories(state, payload) {

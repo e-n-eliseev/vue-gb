@@ -57,6 +57,7 @@ export default {
       addCategoryTolltip: "Добавить новую категорию в список",
       clearTolltip: "Очистить поля ввода данных",
       newCategory: "",
+      id: this.$attrs.settings?.itemId || "",
       date: this.$attrs.settings?.date || "",
       value: this.$route.query.value || this.$attrs?.settings.value || "",
       category:
@@ -90,7 +91,7 @@ export default {
     },
     addToList() {
       const data = {
-        id: this.length + 1,
+        id: this.shoppingList[this.length - 1].id + 1,
         value: +this.value || 0,
         category: this.category,
         date: this.date || this.getCurrentDate,
@@ -106,8 +107,9 @@ export default {
     },
     changeDataInTheList() {
       const data = {
-        id: this.$attrs.settings.id,
-        value: this.value,
+        itemPos: this.$attrs.settings?.itemPos,
+        id: +this.id,
+        value: +this.value,
         category: this.category,
         date: this.date || this.getCurrentDate,
       };
