@@ -39,11 +39,9 @@ export default {
   },
   methods: {
     showContextMenu(event) {
-      const contextMenuX = `${event.target.getBoundingClientRect().left - 110}`;
-      const contextMenuY = `${
-        event.target.closest(".context-menu-btn").getBoundingClientRect().top +
-        30
-      }`;
+      const targetPos = event.target.getBoundingClientRect();
+      const contextMenuX = `${targetPos.left - 110}`;
+      const contextMenuY = `${targetPos.top + 30}`;
       const id = +event.target.closest(".context-menu-btn").dataset.id;
 
       this.$context.show({

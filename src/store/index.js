@@ -19,8 +19,8 @@ export default new Vuex.Store({
         deleteDataToShoppingList(state, payload) {
             state.shoppingList.splice(payload, 1)
         },
-        changeDataToShoppingList(state, payload) {
-            state.shoppingList.splice(payload.itemPos, 1, payload)
+        changeDataToShoppingList(state, { itemPos, ...payload }) {
+            state.shoppingList.splice(itemPos, 1, payload)
 
         },
         setCategories(state, payload) {
