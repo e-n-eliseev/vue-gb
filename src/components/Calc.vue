@@ -22,11 +22,16 @@
       экранную клавиатуру.</label
     >
     <div v-if="isVisible">
-      <button v-for="item in 9" :key="item" @click="buttonNumber(item)">
+      <button
+        v-for="item in 9"
+        :data-id="item"
+        :key="item"
+        @click="buttonNumber(item)"
+      >
         {{ item }}
       </button>
-      <button @click="buttonBackSpace()">Del</button>
-      <button @click="buttonReset()">Reset</button>
+      <button class="calc-erase" @click="buttonBackSpace()">Del</button>
+      <button class="calc-reset" @click="buttonReset()">Reset</button>
       <div>
         <label
           ><input
@@ -72,52 +77,46 @@ export default {
     buttonNumber(item) {
       this[this.number] = this[this.number] * 10 + item;
     },
-    summ(number1 = 0, number2 = 0) {
+    summ(number1, number2) {
       this.result = `Результат сложения чисел ${this.number1} и ${
         this.number2
       } : ${number1 + number2}`;
       return this.result;
     },
-    diff(number1 = 0, number2 = 0) {
+    diff(number1, number2) {
       this.result = `Результат разности чисел ${this.number1} и ${
         this.number2
-      } :
-      ${number1 - number2}`;
+      } : ${number1 - number2}`;
       return this.result;
     },
-    mult(number1 = 0, number2 = 0) {
+    mult(number1, number2) {
       this.result = `Результат умножения чисел ${this.number1} и ${
         this.number2
-      } :
-      ${number1 * number2}`;
+      } : ${number1 * number2}`;
       return this.result;
     },
-    divide(number1 = 0, number2 = 0) {
+    divide(number1, number2) {
       if (!this.number2) {
         return (this.result = "Делить на 0 нельзя");
       }
-      this.result = `Результат деления чисела ${this.number1} на ${
+      this.result = `Результат деления числа ${this.number1} на ${
         this.number2
-      } :
-       ${number1 / number2}`;
+      } : ${number1 / number2}`;
       return this.result;
     },
-    divideInt(number1 = 0, number2 = 0) {
+    divideInt(number1, number2) {
       if (!this.number2) {
         return (this.result = "Делить на 0 нельзя");
       }
-      this.result = `Результат целочисленного деления числа 
-      ${this.number1} на ${this.number2} : ${Number.parseInt(
-        number1 / number2
-      )}`;
+      this.result = `Результат целочисленного деления числа ${
+        this.number1
+      } на ${this.number2} : ${Number.parseInt(number1 / number2)}`;
       return this.result;
     },
-    pow(number1 = 0, number2 = 0) {
-      this.result = `Результат возведения чисела 
-      ${this.number1} в степень ${this.number2} : ${Math.pow(
-        number1,
-        number2
-      )}`;
+    pow(number1, number2) {
+      this.result = `Результат возведения числа ${this.number1} в степень ${
+        this.number2
+      } : ${Math.pow(number1, number2)}`;
       return this.result;
     },
   },
