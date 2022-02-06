@@ -1,8 +1,8 @@
 <template>
   <div class="calc">
     <div class="calc-inputs">
-      <input class="calc-number1" type="number" v-model="number1" />
-      <input class="calc-number2" type="number" v-model="number2" />
+      <input class="calc-number1" type="number" v-model.number="number1" />
+      <input class="calc-number2" type="number" v-model.number="number2" />
       <p class="calc-result">{{ result }}</p>
     </div>
     <div class="calc-methods">
