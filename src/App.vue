@@ -2,7 +2,8 @@
   <div id="app" @click="hideContextMenu">
     <div id="nav">
       <router-link to="/shoppingpage/1">ShoppingPage</router-link> |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">About</router-link> |
+      <router-link to="/calculator">Calculator</router-link>
     </div>
     <router-view />
     <transition name="fade">
