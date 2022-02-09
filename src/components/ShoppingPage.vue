@@ -79,12 +79,12 @@ export default {
   computed: {
     chartdata() {
       return {
-        labels: this.categoryList,
+        labels: this.categoryListChart,
         datasets: [
           {
             label: "Соотношение текущих трат",
             backgroundColor: this.getCategoryColor,
-            data: this.getCategoryCost,
+            data: this.getCategoryCostChart,
           },
         ],
       };
@@ -93,9 +93,12 @@ export default {
       return this.$store.getters.getFullShoppingValue;
     },
     getCategoryColor() {
-      return this.categoryList.map(
+      return this.categoryListChart.map(
         () => `#${Number.parseInt(Math.random() * 1000000)}`
       );
+    },
+    getCategoryCostChart() {
+      return this.getCategoryCost.filter((item) => item > 0);
     },
     getCategoryCost() {
       const categoryCosts = this.categoryList.map((element) => {
@@ -111,6 +114,12 @@ export default {
     },
     shoppingList() {
       return this.$store.getters.getShoppingList;
+    },
+
+    categoryListChart() {
+      return this.categoryList.filter((item, idx) => {
+        return this.getCategoryCost[idx] > 0;
+      });
     },
     categoryList() {
       return this.$store.getters.getCategoryList;
