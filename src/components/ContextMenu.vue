@@ -21,12 +21,16 @@
 </template>
 
 <script>
+import AddToShoppingList from "./AddToShoppingList.vue";
 export default {
+  name: "ContextMenu",
   components: {
-    AddToShoppingList: () => import("./AddToShoppingList.vue"),
+    AddToShoppingList,
   },
   data() {
-    return {};
+    return {
+      dialog: false,
+    };
   },
   props: {
     id: {
@@ -38,8 +42,6 @@ export default {
       default: () => 0,
     },
   },
-  name: "ContextMenu",
-
   methods: {
     deleteItemFromTheList() {
       this.$store.commit(

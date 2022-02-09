@@ -42,7 +42,7 @@
       </v-col>
       <v-col>
         <template>
-          <Doughnut />
+          <Doughnut :chartdata="chartdata" :options="options" />
         </template>
       </v-col>
     </v-row>
@@ -66,44 +66,57 @@ export default {
       pageSize: 5,
       activePage: 1,
       dialog: false,
-      chartOptions: {
+      options: {
         responsive: true,
         maintainAspectRatio: false,
-      },
-      categoryList: {
-        labels: [
-          "January",
-          "February",
-          "March",
-          "April",
-          "May",
-          "June",
-          "July",
-          "August",
-          "September",
-          "October",
-          "November",
-          "December",
-        ],
-        datasets: [
-          {
-            label: "Data One",
-            data: [40, 20, 12, 39, 10, 40, 39, 80, 40, 20, 12, 11],
-          },
-        ],
+        title: {
+          display: true,
+          text: "Соотношение текущих трат",
+        },
       },
     };
   },
   computed: {
+    chartdata() {
+      return {
+        labels: this.categoryList,
+        datasets: [
+          {
+            label: "Соотношение текущих трат",
+            backgroundColor: [
+              "#f80979",
+              "#07079",
+              "#f87909",
+              "#f87970",
+              "#087979",
+            ],
+            data: this.getCategoryCost,
+          },
+        ],
+      };
+    },
     getFSV() {
       return this.$store.getters.getFullShoppingValue;
+    },
+    getCategoryCost() {
+      const categoryCosts = this.categoryList.map((element) => {
+        return this.shoppingList.reduce((acc, item) => {
+          if (item.category == element) {
+            acc = acc + item.value;
+            return acc;
+          }
+          return acc;
+        }, 0);
+      });
+      console.log(categoryCosts);
+      return categoryCosts;
     },
     shoppingList() {
       return this.$store.getters.getShoppingList;
     },
-    // categoryList() {
-    //   return this.$store.getters.getCategoryList;
-    // },
+    categoryList() {
+      return this.$store.getters.getCategoryList;
+    },
     length() {
       return this.shoppingList.length;
     },
@@ -114,6 +127,9 @@ export default {
       return this.lastItem - this.pageSize;
     },
   },
+  // watch() {
+  //   this.chartdata.data;
+  // },
   methods: {
     changeSize(number) {
       this.pageSize = number;
@@ -122,42 +138,6 @@ export default {
     },
     showPage(page) {
       this.activePage = page;
-    },
-    showAddToshoppingListForm() {
-      this.isVisibleForm = !this.isVisibleForm;
-    },
-    addFood() {
-      this.$router.push({
-        name: "AddToShoppingList",
-        query: {
-          value: +200,
-        },
-        params: {
-          category: "Food",
-        },
-      });
-    },
-    addTransport() {
-      this.$router.push({
-        name: "AddToShoppingList",
-        params: {
-          category: "Transport",
-        },
-        query: {
-          value: +50,
-        },
-      });
-    },
-    addEntertainment() {
-      this.$router.push({
-        name: "AddToShoppingList",
-        params: {
-          category: "Entertainment",
-        },
-        query: {
-          value: +2000,
-        },
-      });
     },
   },
   //получаем данные при создании компонента

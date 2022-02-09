@@ -3,22 +3,21 @@ import { Doughnut } from "vue-chartjs";
 
 export default {
   extends: Doughnut,
-  data: () => ({
+  props: {
     chartdata: {
-      labels: ["Январь", "Февраль"],
-      datasets: [
-        {
-          label: "Данные 1",
-          backgroundColor: "#f87979",
-          data: [40, 20],
-        },
-      ],
+      type: Object,
+      default: null,
     },
     options: {
-      responsive: true,
-      maintainAspectRatio: false,
+      type: Object,
+      default: null,
     },
-  }),
+  },
+  watch: {
+    chartdata() {
+      this.renderChart(this.chartdata, this.options);
+    },
+  },
   mounted() {
     this.renderChart(this.chartdata, this.options);
   },
