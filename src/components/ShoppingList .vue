@@ -1,32 +1,50 @@
 <template>
-  <div class="shopping-list">
-    <ul class="shopping-list-header">
-      <li class="shopping-list-item shopping-list-item__header">#</li>
-      <li class="shopping-list-item shopping-list-item__header">Date</li>
-      <li class="shopping-list-item shopping-list-item__header">Category</li>
-      <li class="shopping-list-item shopping-list-item__header">Value</li>
-    </ul>
-    <ul v-for="item in shoppingList" :key="item.id" class="shopping-list-items">
-      <li class="shopping-list-item">{{ item.id }}</li>
-      <li class="shopping-list-item">{{ item.date }}</li>
-      <li class="shopping-list-item">{{ item.category }}</li>
-      <li class="shopping-list-item">
-        {{ item.value }}
-        <button
-          class="context-menu-btn"
-          :Data-Id="shoppingList.indexOf(item) + firstItemId + 1"
-          @click="showContextMenu(item)"
-        >
-          <span class="context-menu-btn-icon"></span>
-        </button>
-      </li>
-    </ul>
-  </div>
+  <v-container>
+    <v-row class="ma-1">
+      <v-col :cols="2">#</v-col>
+      <v-col :cols="5">Date</v-col>
+      <v-col :cols="3">Category</v-col>
+      <v-col :cols="1">Value</v-col>
+      <v-col :cols="1"></v-col>
+    </v-row>
+    <v-divider></v-divider>
+    <v-row class="ma-1" v-for="item in shoppingList" :key="item.id">
+      <v-col :cols="2">{{ item.id }}</v-col>
+      <v-col :cols="5">{{ item.date }}</v-col>
+      <v-col :cols="3">{{ item.category }}</v-col>
+      <v-col :cols="1">{{ item.value }}</v-col>
+      <v-col :cols="1">
+        <v-menu v-model="menu">
+          <template v-slot:activator="{ on }">
+            <v-btn x-small icon v-on="on" :ripple="false">
+              <v-icon>mdi-dots-vertical</v-icon>
+            </v-btn>
+          </template>
+          <v-card>
+            <context-menu
+              :id="shoppingList.indexOf(item)"
+              :firstItemId="firstItemId"
+            />
+          </v-card>
+        </v-menu>
+      </v-col>
+    </v-row>
+    <v-divider></v-divider>
+  </v-container>
 </template>
 
 <script>
+import ContextMenu from "./ContextMenu.vue";
 export default {
   name: "ShoppingList",
+  components: {
+    ContextMenu,
+  },
+  data() {
+    return {
+      menu: false,
+    };
+  },
   props: {
     shoppingList: {
       type: Array,
@@ -37,30 +55,12 @@ export default {
       default: () => 0,
     },
   },
-  methods: {
-    showContextMenuPos() {
-      const targetPos = event.target.getBoundingClientRect();
-      return {
-        contextMenuX: `${targetPos.left - 110}px`,
-        contextMenuY: `${targetPos.top + 30}px`,
-      };
-    },
-    showContextMenuId() {
-      return +event.target.closest(".context-menu-btn").dataset.id;
-    },
-    showContextMenu(item) {
-      this.$context.show({
-        ...this.showContextMenuPos(),
-        itemPos: this.showContextMenuId(),
-        ...item,
-      });
-    },
-  },
+  methods: {},
 };
 </script>
 
 <style scoped>
-.shopping-list {
+/* .shopping-list {
   width: 700px;
   margin: 20px 0;
   padding: 10px;
@@ -135,5 +135,5 @@ export default {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 </style>

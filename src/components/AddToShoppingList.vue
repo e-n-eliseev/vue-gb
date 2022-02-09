@@ -1,51 +1,56 @@
 <template>
-  <div class="add-to-list">
-    <input
-      class="add-to-list-field"
-      type="number"
-      placeholder="Value"
-      v-model="value"
-    />
-    <!-- <input
-      class="add-to-list-field"
-      placeholder="Category"
+  <v-card class="pa-8">
+    <v-text-field label="Цена" placeholder="Value" v-model.number="value" />
+    <v-select
+      :items="categoryList"
       v-model="category"
-    /> -->
-    <select v-model="category" class="add-to-category-list-field">
-      <option class="options" v-for="(item, idx) in categoryList" :key="idx">
-        {{ item }}
-      </option>
-    </select>
-    <input class="add-to-list-field" placeholder="Date" v-model="date" />
-    <div class="add-to-category">
-      <input
-        class="add-to-category-field"
-        placeholder="Type a new category"
+      label="Категория"
+    ></v-select>
+    <v-text-field label="Дата" placeholder="Date" v-model="date" />
+    <v-row>
+      <v-text-field
+        class="pr-10 pl-3"
+        label="Новая категория"
+        placeholder="New Catecory"
         v-model="newCategory"
       />
-      <button
-        class="add-to-list-btn"
+      <v-btn
+        class="text-body-2 ma-1"
+        :ripple="false"
+        elevation="2"
+        color="teal"
+        dark
         @click="addToCategory"
-        :title="addCategoryTolltip"
       >
-        ADD a category
-      </button>
-      <button class="add-to-list-btn" @click="addToList" :title="addTolltip">
-        ADD a note to the list
-      </button>
-      <button
+        ADD a category</v-btn
+      >
+    </v-row>
+    <v-row>
+      <v-btn
+        class="text-body-2 ma-1"
+        :ripple="false"
+        elevation="2"
+        color="teal"
+        dark
+        @click="addToList"
+      >
+        ADD a note to the list</v-btn
+      >
+    </v-row>
+    <v-row>
+      <v-btn
+        class="text-body-2 ma-1"
+        :ripple="false"
+        elevation="2"
+        color="teal"
+        dark
         v-if="addButtonVision"
-        class="add-to-list-btn"
         @click="changeDataInTheList"
-        :title="addTolltip"
       >
-        Save changes
-      </button>
-    </div>
-    <button class="add-to-list-btn" @click="resetForm" :title="clearTolltip">
-      CLEAR input data
-    </button>
-  </div>
+        ADD a note to the list</v-btn
+      >
+    </v-row>
+  </v-card>
 </template>
 
 <script>
@@ -53,16 +58,12 @@ export default {
   name: "AddToShoppingList",
   data() {
     return {
-      addTolltip: "Добавить заметку в список",
-      addCategoryTolltip: "Добавить новую категорию в список",
-      clearTolltip: "Очистить поля ввода данных",
       newCategory: "",
-      id: this.$attrs.settings?.itemId || "",
-      date: this.$attrs.settings?.date || "",
-      value: this.$route.query.value || this.$attrs?.settings.value || "",
-      category:
-        this.$route.params.category || this.$attrs?.settings.category || "",
-      addButtonVision: this.$attrs.settings?.addButtonVision || false,
+      id: "",
+      date: "",
+      value: "",
+      category: "",
+      addButtonVision: false,
     };
   },
   computed: {

@@ -1,81 +1,27 @@
 <template>
-  <div id="app" @click="hideContextMenu">
-    <div id="nav">
-      <router-link to="/shoppingpage/1">ShoppingPage</router-link> |
-      <router-link to="/about">About</router-link> |
-      <router-link to="/calculator">Calculator</router-link>
-    </div>
-    <router-view />
-    <transition name="fade">
-      <modal-window :settings="settings" v-if="modalWindowName" />
-      <context-menu :context="context" v-if="id" />
-    </transition>
-  </div>
+  <v-app>
+    <v-app-bar app flat>
+      <v-btn to="/shoppingpage/1" plain :ripple="false"> ShoppingPage </v-btn>
+      <v-btn to="/about" plain :ripple="false"> About </v-btn>
+      <v-btn to="/calculator" plain :ripple="false"> Calculator </v-btn>
+    </v-app-bar>
+    <v-main>
+      <router-view />
+    </v-main>
+  </v-app>
 </template>
 <script>
 export default {
-  components: {
-    ModalWindow: () =>
-      import(/* webpackChunkName: 'Modal' */ "./components/ModalWindow.vue"),
-    ContextMenu: () =>
-      import(/* webpackChunkName: 'Modal' */ "./components/ContextMenu.vue"),
-  },
   name: "App",
-  data() {
-    return {
-      modalWindowName: "",
-      settings: {},
-      id: "",
-      context: {},
-    };
-  },
-  methods: {
-    hideContextMenu() {
-      if (
-        !event.target.closest(".context-menu-btn") &&
-        !event.target.closest(".wrapperContext")
-      ) {
-        this.$context.hide();
-      }
-    },
-    onShown(settings) {
-      this.modalWindowName = settings.name;
-      this.settings = settings;
-    },
-    onHide() {
-      this.modalWindowName = "";
-      this.settings = {};
-    },
-    onShownContext(context) {
-      this.id = context.itemPos;
-      this.context = context;
-    },
-    onHideContext() {
-      this.id = "";
-      this.context = {};
-    },
-  },
   created() {
     this.$store.dispatch("fetchData");
     this.$store.dispatch("loadCategories");
-  },
-  mounted() {
-    this.$modal.EventBus.$on("show", this.onShown);
-    this.$modal.EventBus.$on("hide", this.onHide);
-    this.$context.EventBus.$on("show", this.onShownContext);
-    this.$context.EventBus.$on("hide", this.onHideContext);
-  },
-  beforeDestroy() {
-    this.$modal.EventBus.$off("show", this.onShown);
-    this.$modal.EventBus.$off("hide", this.onHide);
-    this.$context.EventBus.$off("show", this.onShown);
-    this.$context.EventBus.$off("hide", this.onHideContext);
   },
 };
 </script>
 
 <style scoped>
-#app {
+/* #app {
   font-family: Avenir, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
@@ -102,7 +48,7 @@ a.router-link-exact-active {
 .fade-enter,
 .fade-leave-to {
   opacity: 0;
-}
+} */
 </style>
 
 
