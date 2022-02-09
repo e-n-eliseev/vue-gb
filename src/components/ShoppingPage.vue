@@ -83,13 +83,7 @@ export default {
         datasets: [
           {
             label: "Соотношение текущих трат",
-            backgroundColor: [
-              "#f80979",
-              "#07079",
-              "#f87909",
-              "#f87970",
-              "#087979",
-            ],
+            backgroundColor: this.getCategoryColor,
             data: this.getCategoryCost,
           },
         ],
@@ -97,6 +91,11 @@ export default {
     },
     getFSV() {
       return this.$store.getters.getFullShoppingValue;
+    },
+    getCategoryColor() {
+      return this.categoryList.map(
+        () => `#${Number.parseInt(Math.random() * 1000000)}`
+      );
     },
     getCategoryCost() {
       const categoryCosts = this.categoryList.map((element) => {
@@ -108,7 +107,6 @@ export default {
           return acc;
         }, 0);
       });
-      console.log(categoryCosts);
       return categoryCosts;
     },
     shoppingList() {
