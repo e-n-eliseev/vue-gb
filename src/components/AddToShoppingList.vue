@@ -107,6 +107,7 @@ export default {
       this.value = "";
       this.category = "";
       this.date = "";
+      this.id = "";
     },
     addToList() {
       const data = {
@@ -117,6 +118,8 @@ export default {
       };
       console.log(data);
       this.$store.commit("addDataToShoppingList", data);
+      this.resetForm();
+      this.$emit("close");
     },
     addToCategory() {
       if (!this.categoryList.includes(this.newCategory)) {
@@ -134,6 +137,8 @@ export default {
       };
       console.log(data);
       this.$store.commit("changeDataToShoppingList", data);
+      this.resetForm();
+      this.$emit("close");
     },
   },
   //получение и присвоение данных при отрисовке

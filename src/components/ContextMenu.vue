@@ -2,14 +2,21 @@
   <v-card>
     <v-container>
       <v-row class="ma-1">
-        <v-dialog width="700">
+        <v-dialog v-model="dialog" width="700">
           <template v-slot:activator="{ on }">
-            <v-btn class="text-body-2 ma-1" v-on="on" :ripple="false" text>
+            <v-btn
+              class="text-body-2 ma-1"
+              v-on="on"
+              @click="close"
+              :ripple="false"
+              text
+            >
               <v-icon>mdi-delete </v-icon> Редактировать
             </v-btn>
           </template>
           <v-card>
             <AddToShoppingList
+              @close="dialog = false"
               :item="item"
               :arrId="id + firstItemId"
               :addButtonVision="true"
@@ -38,7 +45,9 @@ export default {
     AddToShoppingList,
   },
   data() {
-    return {};
+    return {
+      dialog: false,
+    };
   },
   props: {
     item: {
@@ -55,6 +64,9 @@ export default {
     },
   },
   methods: {
+    close() {
+      console.log("close");
+    },
     deleteItemFromTheList() {
       this.$store.commit(
         "deleteDataToShoppingList",

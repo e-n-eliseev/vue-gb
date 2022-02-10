@@ -19,7 +19,7 @@
               </v-btn>
             </template>
             <v-card>
-              <AddToShoppingList />
+              <AddToShoppingList @close="dialog = false" />
             </v-card>
           </v-dialog>
 
@@ -28,8 +28,8 @@
             :shoppingList="shoppingList.slice(this.firstItem, this.lastItem)"
             :firstItemId="this.firstItem"
           />
-          <div v-if="length">Итого затрат:{{ getFSV }}</div>
           <v-pagination
+            class="ma-5"
             v-if="length > pageSize"
             color="teal"
             v-model="activePage"
