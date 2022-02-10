@@ -29,15 +29,13 @@
             :firstItemId="this.firstItem"
           />
           <div v-if="length">Итого затрат:{{ getFSV }}</div>
-          <Pagination
+          <v-pagination
             v-if="length > pageSize"
-            :length="length"
-            :activePage="activePage"
-            :pageSize="pageSize"
-            @choosePage="showPage"
-            @changePage="showPage"
-            @changeSize="changeSize"
-          />
+            color="teal"
+            v-model="activePage"
+            :length="Math.ceil(length / pageSize)"
+          >
+          </v-pagination>
         </div>
       </v-col>
       <v-col>
@@ -55,7 +53,6 @@ export default {
   name: "ShoppingPage",
   components: {
     ShoppingList: () => import("./ShoppingList .vue"),
-    Pagination: () => import("./Pagination.vue"),
     AddToShoppingList: () => import("./AddToShoppingList.vue"),
     Doughnut,
   },
@@ -134,10 +131,23 @@ export default {
       return this.lastItem - this.pageSize;
     },
   },
-  // watch() {
-  //   this.chartdata.data;
-  // },
+  watch: {
+    activePage() {
+      this.pagginatorRoute();
+    },
+  },
   methods: {
+    pagginatorRoute() {
+      if (this.activePage == this.$route.params.activePage) {
+        return;
+      }
+      this.$router.push({
+        name: "ShoppingPages",
+        params: {
+          activePage: this.activePage,
+        },
+      });
+    },
     changeSize(number) {
       this.pageSize = number;
       this.lastItem;
