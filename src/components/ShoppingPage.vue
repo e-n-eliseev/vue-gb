@@ -33,7 +33,7 @@
             v-if="length > pageSize"
             color="teal"
             v-model="activePage"
-            :length="Math.ceil(length / pageSize)"
+            :length="pagginatorLength"
           >
           </v-pagination>
         </div>
@@ -130,13 +130,19 @@ export default {
     firstItem() {
       return this.lastItem - this.pageSize;
     },
+    pagginatorLength() {
+      return Math.ceil(this.length / this.pageSize);
+    },
   },
   watch: {
+    pagginatorLength() {
+      if (this.pagginatorLength < this.activePage) {
+        this.activePage = --this.activePage;
+      }
+      this.pagginatorRoute();
+    },
     activePage() {
       this.pagginatorRoute();
-      if (Math.ceil(this.length / this.pageSize) != this.activePage) {
-        this.activePage = 1;
-      }
     },
   },
   methods: {
