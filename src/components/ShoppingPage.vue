@@ -19,7 +19,7 @@
               </v-btn>
             </template>
             <v-card>
-              <AddToShoppingList @onAdd="dialog = false" />
+              <AddToShoppingList />
             </v-card>
           </v-dialog>
 

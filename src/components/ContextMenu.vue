@@ -1,22 +1,32 @@
 <template>
   <v-card>
-    <v-dialog v-model="dialog" width="700">
-      <template v-slot:activator="{ on }">
-        <v-btn class="text-body-2 ma-1" v-on="on" :ripple="false" plain>
-          <v-icon>mdi-delete </v-icon> Редактировать
+    <v-container>
+      <v-row class="ma-1">
+        <v-dialog width="700">
+          <template v-slot:activator="{ on }">
+            <v-btn class="text-body-2 ma-1" v-on="on" :ripple="false" text>
+              <v-icon>mdi-delete </v-icon> Редактировать
+            </v-btn>
+          </template>
+          <v-card>
+            <AddToShoppingList
+              :item="item"
+              :arrId="id + firstItemId"
+              :addButtonVision="true"
+            />
+          </v-card>
+        </v-dialog>
+      </v-row>
+      <v-row class="ma-1">
+        <v-btn
+          class="text-body-2 ma-1"
+          :ripple="false"
+          @click="deleteItemFromTheList"
+          text
+          ><v-icon>mdi-pencil </v-icon> Удалить
         </v-btn>
-      </template>
-      <v-card>
-        <AddToShoppingList />
-      </v-card>
-    </v-dialog>
-    <v-btn
-      class="text-body-2 ma-1"
-      :ripple="false"
-      plain
-      @click="deleteItemFromTheList"
-      ><v-icon>mdi-pencil </v-icon> Удалить
-    </v-btn>
+      </v-row>
+    </v-container>
   </v-card>
 </template>
 
@@ -28,11 +38,13 @@ export default {
     AddToShoppingList,
   },
   data() {
-    return {
-      dialog: false,
-    };
+    return {};
   },
   props: {
+    item: {
+      type: Object,
+      default: null,
+    },
     id: {
       type: Number,
       default: () => 0,

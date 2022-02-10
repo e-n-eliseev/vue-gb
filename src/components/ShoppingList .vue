@@ -2,26 +2,27 @@
   <v-container>
     <v-row class="ma-1">
       <v-col :cols="2">#</v-col>
-      <v-col :cols="5">Date</v-col>
-      <v-col :cols="3">Category</v-col>
-      <v-col :cols="1">Value</v-col>
+      <v-col :cols="3">Date</v-col>
+      <v-col :cols="4">Category</v-col>
+      <v-col :cols="2">Value</v-col>
       <v-col :cols="1"></v-col>
     </v-row>
     <v-divider></v-divider>
     <v-row class="ma-1" v-for="item in shoppingList" :key="item.id">
       <v-col :cols="2">{{ item.id }}</v-col>
-      <v-col :cols="5">{{ item.date }}</v-col>
-      <v-col :cols="3">{{ item.category }}</v-col>
-      <v-col :cols="1">{{ item.value }}</v-col>
+      <v-col :cols="3">{{ item.date }}</v-col>
+      <v-col :cols="4">{{ item.category }}</v-col>
+      <v-col :cols="2">{{ item.value }}</v-col>
       <v-col :cols="1">
-        <v-menu v-model="menu">
+        <v-menu :offset-y="true">
           <template v-slot:activator="{ on }">
-            <v-btn x-small icon v-on="on" :ripple="false">
+            <v-btn :key="item.id" x-small icon v-on="on" :ripple="false">
               <v-icon>mdi-dots-vertical</v-icon>
             </v-btn>
           </template>
           <v-card>
-            <context-menu
+            <ContextMenu
+              :item="item"
               :id="shoppingList.indexOf(item)"
               :firstItemId="firstItemId"
             />
@@ -41,9 +42,7 @@ export default {
     ContextMenu,
   },
   data() {
-    return {
-      menu: false,
-    };
+    return {};
   },
   props: {
     shoppingList: {

@@ -32,6 +32,7 @@
         elevation="2"
         color="teal"
         dark
+        v-if="!addButtonVision"
         @click="addToList"
       >
         ADD a note to the list</v-btn
@@ -47,7 +48,7 @@
         v-if="addButtonVision"
         @click="changeDataInTheList"
       >
-        ADD a note to the list</v-btn
+        Save changes</v-btn
       >
     </v-row>
   </v-card>
@@ -56,14 +57,31 @@
 <script>
 export default {
   name: "AddToShoppingList",
+  props: {
+    item: {
+      type: Object,
+      default: null,
+    },
+    arrId: {
+      type: Number,
+      default: () => 0,
+    },
+    firstItemId: {
+      type: Number,
+      default: () => 0,
+    },
+    addButtonVision: {
+      type: Boolean,
+      default: () => false,
+    },
+  },
   data() {
     return {
       newCategory: "",
-      id: "",
-      date: "",
-      value: "",
-      category: "",
-      addButtonVision: false,
+      id: this.item?.id || "",
+      date: this.item?.date || "",
+      value: this.item?.value || "",
+      category: this.item?.category || "",
     };
   },
   computed: {
@@ -94,7 +112,7 @@ export default {
       const data = {
         id: this.shoppingList[this.length - 1].id + 1,
         value: +this.value || 0,
-        category: this.category,
+        category: this.category || "Без названия",
         date: this.date || this.getCurrentDate,
       };
       console.log(data);
@@ -108,7 +126,7 @@ export default {
     },
     changeDataInTheList() {
       const data = {
-        itemPos: this.$attrs.settings?.itemPos,
+        itemPos: this.arrId,
         id: +this.id,
         value: +this.value,
         category: this.category,
