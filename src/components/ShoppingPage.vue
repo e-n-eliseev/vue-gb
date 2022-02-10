@@ -134,6 +134,9 @@ export default {
   watch: {
     activePage() {
       this.pagginatorRoute();
+      if (Math.ceil(this.length / this.pageSize) != this.activePage) {
+        this.activePage = 1;
+      }
     },
   },
   methods: {
