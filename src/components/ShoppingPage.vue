@@ -3,7 +3,7 @@
     <v-row>
       <v-col>
         <div class="wrapper">
-          <h1>My personal shipping list.</h1>
+          <h1>My personal shopping list.</h1>
           <v-dialog v-model="dialog" width="700">
             <template v-slot:activator="{ on }">
               <v-btn
@@ -184,28 +184,5 @@ export default {
   align-items: center;
   justify-content: center;
   margin: 0 auto;
-}
-h1 {
-  font-size: 25px;
-  margin: 20px 0;
-}
-/* .showAddToshoppingListFormBtn {
-  color: aliceblue;
-  background: green;
-  border-radius: 10px;
-  min-width: 130px;
-  min-height: 30px;
-  box-shadow: 0 5px 5px black;
-  border: none;
-  transition: 0.1s ease-in-out;
-  margin: 10px 0;
-}
-.showAddToshoppingListFormBtn:active {
-  transform: translateY(5px);
-  box-shadow: 0 0px 0px black;
-} */
-.quick-add {
-  display: flex;
-  flex-direction: column;
 }
 </style>

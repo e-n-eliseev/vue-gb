@@ -17,12 +17,6 @@ const routes = [
             '../components/About.vue')
     },
     {
-        path: '/calculator',
-        name: 'Calculator',
-        component: () => import(/* webpackChunkName: "Home" */
-            '../components/Calc.vue')
-    },
-    {
         path: '/',
         name: 'Welcome',
         component: () => import(/* webpackChunkName: "Home" */
@@ -53,7 +47,6 @@ const getTitleByRouteName = routeName => {
         'ShoppingPages': 'Take a look on your shopping activity and add more!',
         'About': 'A piece of information about this app',
         'Welcome': 'Welcome to shopping list aplication',
-        'Calculator': 'Here you can make some calculation',
         'AddToShoppingList': 'Your information is added automatically',
         'PageNotFound': 'Something goes wrong!'
     }[routeName]

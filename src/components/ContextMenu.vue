@@ -67,26 +67,4 @@ export default {
 
 
 <style lang="scss" scoped>
-// .wrapperContext {
-//   position: absolute;
-//   width: 165px;
-//   height: 100px;
-//   box-shadow: 0 0 5px black;
-//   top: 10px;
-//   left: 10px;
-//   background-color: white;
-//   padding: 10px 0;
-//   transition: 0.2s;
-//   border-radius: 5px;
-// }
-// .context-menu-btn {
-//   background: transparent;
-//   border: none;
-//   margin: 10px 0;
-//   width: 100%;
-//   height: 30px;
-// }
-// .context-menu-btn:hover {
-//   background-color: rgb(226, 224, 224);
-// }
 </style>
